@@ -27,21 +27,39 @@ const marcarCarrito =() =>{
             <img src="${objeto.imagen}">
             <h3 class="nombreProduct">${objeto.nombre} </h3>
             <p class="precio"> ${objeto.precio} $<p/>
-            <p>${objeto.cantidad} </p>
+            <span class="restar"> - </span>
+            <p>Cantidad: ${objeto.cantidad} </p>
+            <span class="sumar"> + </span>
             <p>Total : ${objeto.cantidad * objeto.precio} </p>
+            <span class="eliminar"> ❌ </span>
 
     `;
 
     modal.append(contenedorCarrito);
 
-    let eliminarProducto = document.createElement("span");
+    let restarProducto = contenedorCarrito.querySelector(".restar");
 
-    eliminarProducto.innerText ="❌";
-    eliminarProducto.className ="eliminar";
+    restarProducto.addEventListener("click", ()=> {
+        if(objeto.cantidad != 1){
+        objeto.cantidad--;
+    };
+        guardarLocal();
+        marcarCarrito();
+    });
 
-    eliminarProducto.addEventListener("click", eliminarProductoCarrito);
+    let sumarProducto =contenedorCarrito.querySelector(".sumar");
 
-    modal.append(eliminarProducto);
+    sumarProducto.addEventListener("click", () => {
+        objeto.cantidad++;
+        guardarLocal();
+        marcarCarrito();
+    });
+
+    let eliminarProducto = contenedorCarrito.querySelector(".eliminar");
+
+    eliminarProducto.addEventListener("click", () => {
+        eliminarProductoCarrito(objeto.id);
+    });
 
     });
 
@@ -55,33 +73,53 @@ const marcarCarrito =() =>{
 
     let pago =document.createElement("button")
     pago.className ="pago"
-    pago.innerHTML= `Pagar`
+    pago.innerHTML= `Pagar`;
+    
+   
 
+    document.body.appendChild(pago);
+
+    pago.onclick = function (){
+       
+        Swal.fire ({
+            position: 'center',
+            icon: 'success',
+            title: 'Pago realizado exitosamente',
+            showConfirmButton: false,
+            timer: 1500
+        })
+
+    }
     modal.append(pago);
+  
 };
 
-mostrarCarrito.addEventListener("click", marcarCarrito);
+mostrarCarrito.addEventListener("click", marcarCarrito)
 
-const eliminarProductoCarrito =()=>{
-     const encontrarId = carritoVacio.find((element)=> element.id);
+const eliminarProductoCarrito =(id)=>{
+     const encontrarId = carritoVacio.find((element)=> element.id=== id);
 
      carritoVacio =carritoVacio.filter((carritoId)=>{
         return carritoId !== encontrarId;
      });
 
      contadorCarrito();
-     contadorCarrito();
+     guardarLocal();
      marcarCarrito();
 };
 
-const contadorCarrito = ()=>{
-    cantidadCarrito.style.display= "block";
 
-    const carritoLength = carritoVacio.length;
+const contadorCarrito = ()=>{
+    cantidadProductos.style.display = "block";
+    
+    const carritoLength = Object.keys(carritoVacio).length;
+   
     localStorage.setItem("carritoLength", JSON.stringify(carritoLength));
 
-    cantidadCarrito.innerText = JSON.parse(localStorage.getItem("carritoLength"));
+    cantidadProductos.innerText = JSON.parse(localStorage.getItem("carritoLength"));
+
 };
+
 contadorCarrito();
 
 

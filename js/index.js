@@ -1,9 +1,10 @@
-let carritoVacio = JSON.parse(localStorage.getItem("carrito")) || [];
-
 const contenedorCompras =document.getElementById("contenedorCompras");
 const mostrarCarrito =document.getElementById("mostrarCarrito");
 const modal =document.getElementById("contenedorModal");
-const cantidadCarrito =document.getElementById("cantidadProductos");
+const cantidadProductos =document.getElementById("cantidadProductos");
+const btnPagar = document.getElementById("btnPagar");
+
+let carritoVacio = JSON.parse(localStorage.getItem("carrito")) || [];
 
 arrayProductos.forEach((objeto)=>{
     const contenedor =document.createElement("div");
@@ -53,5 +54,19 @@ const guardarLocal = ()=>{
     localStorage.setItem("carrito", JSON.stringify(carritoVacio));
 
 }
+
+const horaActual = document.getElementById("hora");
+
+fetch('http://worldtimeapi.org/api/ip')
+  .then(response => response.json())
+  .then(data => {
+    const div = document.createElement("div");
+    div.className = "hora_actual";
+    div.innerHTML = `<p> ${data.datetime}</p>`;
+    horaActual.append(div);
+  });
+ 
+
+
 
 
