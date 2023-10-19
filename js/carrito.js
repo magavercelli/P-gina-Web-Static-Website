@@ -103,6 +103,8 @@ const eliminarProductoCarrito =(id)=>{
         return carritoId !== encontrarId;
      });
 
+     
+    
      contadorCarrito();
      guardarLocal();
      marcarCarrito();
@@ -111,12 +113,12 @@ const eliminarProductoCarrito =(id)=>{
 
 const contadorCarrito = ()=>{
     cantidadProductos.style.display = "block";
-    
-    const carritoLength = carritoVacio.length;
-   
-    localStorage.setItem("carritoLength", JSON.stringify(carritoLength));
 
-    cantidadProductos.innerText = JSON.parse(localStorage.getItem("carritoLength"));
+    const carritoExtension = carritoVacio.length;
+   
+    localStorage.setItem("carritoExtension", JSON.stringify(carritoExtension));
+
+    cantidadProductos.innerText = JSON.parse(localStorage.getItem("carritoExtension"));
 
 };
 

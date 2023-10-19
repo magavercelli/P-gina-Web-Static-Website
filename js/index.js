@@ -6,6 +6,7 @@ const btnPagar = document.getElementById("btnPagar");
 
 let carritoVacio = JSON.parse(localStorage.getItem("carrito")) || [];
 
+
 arrayProductos.forEach((objeto)=>{
     const contenedor =document.createElement("div");
     contenedor.className ="tarjeta"
@@ -44,6 +45,7 @@ arrayProductos.forEach((objeto)=>{
             
         });
         console.log(carritoVacio);
+        console.log(carritoVacio.length);
         contadorCarrito();
         guardarLocal();
     };
